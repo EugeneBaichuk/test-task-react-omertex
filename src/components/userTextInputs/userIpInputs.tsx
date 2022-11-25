@@ -10,6 +10,7 @@ interface labelObj {
     value: string,
     wireless: boolean,
     id: string
+    error: boolean
 }
 
 type UserIpInputsProps = {
@@ -34,6 +35,7 @@ export const UserIpInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, radio
 
     const isDisabled = (radioInputValue === inputVal) ? false : true;
     const dispatch = useDispatch();
+
     const onValueChange = (id: string) => (e: any) => {
         let currentForm: any = [];
         userLabels.map((item, i) => {
@@ -45,11 +47,12 @@ export const UserIpInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, radio
                 }
             });
             if (item.id === id) {
-                dispatch(setInputValue({key: currentForm[0], value: e.target.value, i: i}))
+                let error = e.target.value.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) ? false: true; 
+                error = (item.label === "IP address:" || item.label === "Subnet Mask:" || item.label === "Preferred DNS server:") ? error: false;
+                dispatch(setInputValue({key: currentForm[0], value: e.target.value, error: error, i: i}))
             }
             return item;
         });
-        console.log();
     }
 
     return (

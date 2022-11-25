@@ -39,6 +39,7 @@ export const Form = () => {
     const onWifiChange = (val: boolean) => () => {
         dispatch(setWifiInput(!val));
     }
+    
 
     return (
         <div className='form'>

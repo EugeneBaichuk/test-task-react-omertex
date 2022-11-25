@@ -21,7 +21,9 @@ export const Form = () => {
         DNSformControlData, 
         ipFormControlData, 
         userIpLabels, 
-        userDNSLabels, 
+        userDNSLabels,
+        userWirelessIpLabels,
+        userWirelessDNSLabels, 
         DNSradioInputValue,
         wirelessIpRadioInputValue, 
         wirelessDNSradioInputValue, 
@@ -38,7 +40,6 @@ export const Form = () => {
         dispatch(setWifiInput(!val));
     }
 
-
     return (
         <div className='form'>
             <section className='form__section'>
@@ -54,9 +55,9 @@ export const Form = () => {
                 <SelectAutoWidth/> 
                 <Security/>
                 <IpAdress radioInputValue={wirelessIpRadioInputValue} formControlData={wirelessIpFormControlData} onchange={onChange(setWirelessIpRadioInputValue)}/>
-                <UserIpInputs userLabels={userIpLabels} inputVal={"wirelessUserIp"} radioInputValue={wirelessIpRadioInputValue}/>
+                <UserIpInputs userLabels={userWirelessIpLabels} inputVal={"wirelessUserIp"} radioInputValue={wirelessIpRadioInputValue}/>
                 <IpAdress radioInputValue={wirelessDNSradioInputValue} formControlData={wirelessDNSformControlData} onchange={onChange(setWirelessDNSRadioInputValue)}/>
-                <UserIpInputs userLabels={userDNSLabels} inputVal={"wirelessUserDNS"} radioInputValue={wirelessDNSradioInputValue}/>
+                <UserIpInputs userLabels={userWirelessDNSLabels} inputVal={"wirelessUserDNS"} radioInputValue={wirelessDNSradioInputValue}/>
             </section>
             <Buttons/>
         </div>

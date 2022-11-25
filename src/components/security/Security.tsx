@@ -20,7 +20,7 @@ export const Security = () => {
                 </div>
                 <div style={{width: "fit-content", margin: "0 20px 0 auto"}}>
                 <TextField
-                    disabled={!securityInputChecked}
+                    disabled={!securityInputChecked || !wifiInputChecked}
                     sx={{ minWidth: 350 }}
                     required
                     id="outlined-required"

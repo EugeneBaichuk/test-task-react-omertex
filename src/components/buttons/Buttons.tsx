@@ -6,8 +6,8 @@ export const Buttons = () => {
     return (
         <div className='form__buttons'>
             <Stack spacing={2} direction="row">
-                <Button sx={{borderRadius: "50px"}} variant="contained">Contained</Button>
-                <Button sx={{borderRadius: "50px"}} className='form__button' variant="outlined">Outlined</Button>
+                <Button sx={{width: "100px", borderRadius: "50px"}} variant="contained">Save</Button>
+                <Button sx={{width: "100px", borderRadius: "50px"}} className='form__button' variant="outlined">Cancel</Button>
             </Stack>
         </div>
     )

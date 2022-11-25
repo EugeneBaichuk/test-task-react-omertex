@@ -11,9 +11,7 @@ type FormControlLabelItemProps = {
 }
 
 export const FormControlLabelItem: FC<FormControlLabelItemProps> = ({value, label}) => {
-    const {
-        wifiInputChecked
-    } = useSelector(showFormData);
+    const {wifiInputChecked} = useSelector(showFormData);
 
     const disabled = ((value === "wirelessAutoIp" 
     || value === "wirelessUserIp" 

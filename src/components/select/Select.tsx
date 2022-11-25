@@ -1,22 +1,22 @@
-import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import IconButton from '@mui/material/IconButton';
 import ReplayIcon from '@mui/icons-material/Replay';
-import { useSelector} from "react-redux";
-import { showFormData } from "../../slice/formSlice";
-
+import { useSelector, useDispatch} from "react-redux";
+import { showFormData, setNetworkName } from "../../slice/formSlice";
 
 export const SelectAutoWidth = () => {
-    const {
-        wifiInputChecked
-    } = useSelector(showFormData);
-    const [age, setAge] = React.useState('');
+    const {wifiInputChecked, networkName} = useSelector(showFormData);
+    const dispatch = useDispatch();
     const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value);
+        dispatch(setNetworkName(event.target.value));
     };
+
+    const handleReplayClick = () => {
+        dispatch(setNetworkName(''));
+    } 
 
     const disabled = !wifiInputChecked ? true : false; 
     return (
@@ -28,19 +28,19 @@ export const SelectAutoWidth = () => {
                         disabled={disabled}
                         labelId="demo-simple-select-autowidth-label"
                         id="demo-simple-select-autowidth"
-                        value={age}
+                        value={networkName}
                         onChange={handleChange}
                         autoWidth
                         label="Wireless network name"
                     >
-                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem sx={{width: "300px"}} value=""><em>None</em></MenuItem>
                         <MenuItem value={"network1"}>network1</MenuItem>
                         <MenuItem value={"network2"}>network2</MenuItem>
                         <MenuItem value={"network3"}>network3</MenuItem>
                     </Select>
                 </FormControl>
             </div>
-            <IconButton disabled={disabled} style={{alignSelf: "center", margin: "0 5px"}} aria-label="fingerprint" color="primary"><ReplayIcon/></IconButton>
+            <IconButton onClick={handleReplayClick} disabled={disabled} style={{alignSelf: "center", margin: "0 5px"}} aria-label="fingerprint" color="primary"><ReplayIcon/></IconButton>
         </div>
     );
 }

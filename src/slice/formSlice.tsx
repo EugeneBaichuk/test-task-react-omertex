@@ -8,8 +8,23 @@ const initialState = {
     DNSradioInputValue: "autoDNS",
     wirelessIpRadioInputValue: "wirelessAutoIp", 
     wirelessDNSradioInputValue: "wirelessAutoDNS",
-    userIpLabels: [{label: "IP address:", required: true}, {label: "Subnet Mask:", required: true}, {label: "Default Gateway", required: false}],
-    userDNSLabels: [{label: "Preferred DNS server:", required: true}, {label: "Alternative DNS server:", required: false} ],
+    networkName: "",
+    userIpLabels: [
+        {label: "IP address:", required: true, value: "", wireless: false, id: "ip1", userForm: true}, 
+        {label: "Subnet Mask:", required: true, value: "", wireless: false, id: "ip2", userForm: true }, 
+        {label: "Default Gateway", required: false, value: "", wireless: false, id: "ip3", userForm: true}
+    ],
+    userWirelessIpLabels: [
+        {label: "IP address:", required: true, value: "", wireless: true, id: "wirIp1", userForm: true}, 
+        {label: "Subnet Mask:", required: true, value: "", wireless: true, id: "wirIp2", userForm: true}, 
+        {label: "Default Gateway", required: false, value: "", wireless: true, id: "wirIp3", userForm: true}],
+    userDNSLabels: [
+        {label: "Preferred DNS server:", required: true, value: "", wireless: false, id: "DNS1", userForm: true}, 
+        {label: "Alternative DNS server:", required: false, value: "", wireless: false, id: "DNS2", userForm: true},
+    ],
+    userWirelessDNSLabels: [
+        {label: "Preferred DNS server:", required: true, value: "", wireless: true, id: "wirDNS1", userForm: true}, 
+        {label: "Alternative DNS server:", required: false, value: "", wireless: true, id: "wirDNS2", userForm: true} ],
     ipFormControlData: [
         {value: "autoIp", label: "Obtain an IP Adress automathically (DHCP/BootP)"},
         {value: "userIp", label: "Use the following IP address"}
@@ -52,7 +67,13 @@ const formSlice = createSlice({
         }, 
         setSecurityInput: (state, action) => {
             state.securityInputChecked = action.payload;
-        } 
+        },
+        setNetworkName: (state, action) => {
+            state.networkName = action.payload;
+        },
+        setInputValue: (state: any, action) => {
+            state[action.payload.key][action.payload.i].value = action.payload.value;
+        },
     }
 })
 
@@ -63,7 +84,9 @@ export const {
     setWirelessIpRadioInputValue, 
     setWirelessDNSRadioInputValue,
     setWifiInput,
-    setSecurityInput
+    setSecurityInput,
+    setNetworkName,
+    setInputValue
 } = formSlice.actions;
 export const showFormData = (state) => state.form;
 export default formSlice.reducer;

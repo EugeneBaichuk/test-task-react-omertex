@@ -8,7 +8,23 @@ import {setSubmitObj, showFormData} from "../../slice/formSlice";
 
 export const Buttons = () => {
     const [render, setRender] = useState(false);
-    const {data} = useSelector(showFormData);
+    const formData = useSelector(showFormData);
+    const {
+        data, 
+        securityKeyForm, 
+        userIpLabels, 
+        userWirelessIpLabels,
+        userDNSLabels,
+        userWirelessDNSLabels,
+        networkName,
+    } = useSelector(showFormData);
+
+    let buttonIsDisabled = (securityKeyForm.value) ? false: true;
+    buttonIsDisabled = userIpLabels.find( (item) => item.error || (item.required && !item.value)) ? true: buttonIsDisabled;
+    buttonIsDisabled = userWirelessIpLabels.find( (item) => item.error || (item.required && !item.value)) ? true: buttonIsDisabled;
+    buttonIsDisabled = userDNSLabels.find( (item) => item.error || (item.required && !item.value)) ? true: buttonIsDisabled;
+    buttonIsDisabled = userWirelessDNSLabels.find( (item) => item.error || (item.required && !item.value)) ? true: buttonIsDisabled;
+    buttonIsDisabled = networkName ? buttonIsDisabled: true;
 
     const dispatch = useDispatch();
     const onSaveBtnClick = () => {
@@ -20,10 +36,13 @@ export const Buttons = () => {
         console.log(data);
     }, [render]);
 
+
+
+
     return (
         <div className='form__buttons'>
             <Stack spacing={2} direction="row">
-                <Button onClick={onSaveBtnClick} sx={{width: "100px", borderRadius: "50px"}} variant="contained">Save</Button>
+                <Button disabled={buttonIsDisabled} onClick={onSaveBtnClick} sx={{width: "100px", borderRadius: "50px"}} variant="contained">Save</Button>
                 <Button sx={{width: "100px", borderRadius: "50px"}} className='form__button' variant="outlined">Cancel</Button>
             </Stack>
         </div>

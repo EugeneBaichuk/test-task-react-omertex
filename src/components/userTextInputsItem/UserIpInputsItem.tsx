@@ -18,6 +18,7 @@ export const UserIpInputsItem: FC<UserIpInputsItemProps> = ({error, label, radio
     const [blurError, setBlurError] = useState(false);
     const {wifiInputChecked} = useSelector(showFormData);
     const wifiDisabled = (!wifiInputChecked && wireless);
+
     const onInputBlur = () => {
         setBlurError(error);
     }

@@ -77,6 +77,9 @@ const formSlice = createSlice({
             state[action.payload.key][action.payload.i].value = action.payload.value;
             state[action.payload.key][action.payload.i].error = action.payload.error;
         },
+        setErrorValue: (state: any) => {
+            state.userIpLabels.map((item: any) => item.error = false);
+        },
         setSecurityKeyForm: (state: any, action) => {
             state.securityKeyForm.value = action.payload.value;
             state.securityKeyForm.error = action.payload.error;
@@ -86,8 +89,6 @@ const formSlice = createSlice({
             const DNSradioInputValue = (state.DNSradioInputValue === "autoDNS") ? true: false;
             const wirelessIpRadioInputValue = (state.wirelessIpRadioInputValue === "wirelessAutoIp") ? true: false;
             const wirelessDNSradioInputValue = (state.wirelessDNSradioInputValue === "wirelessAutoDNS") ? true: false;
-
-            
             state.data = {
                 autoEthernetIpRequired: ipRadioInputValue,
                 userEthernetIpData: {
@@ -131,7 +132,8 @@ export const {
     setNetworkName,
     setInputValue,
     setSecurityKeyForm,
-    setSubmitObj
+    setSubmitObj,
+    setErrorValue
 } = formSlice.actions;
 export const showFormData = (state) => state.form;
 export default formSlice.reducer;

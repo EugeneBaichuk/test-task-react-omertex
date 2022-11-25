@@ -21,7 +21,6 @@ type UserIpInputsProps = {
 
 export const UserIpInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, radioInputValue}) => {
     const formData = useSelector(showFormData);
-
     const userTextForms = () => {
         const forms = [];
         for (let key in formData) {
@@ -34,6 +33,7 @@ export const UserIpInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, radio
     }
 
     const isDisabled = (radioInputValue === inputVal) ? false : true;
+
     const dispatch = useDispatch();
 
     const onValueChange = (id: string) => (e: any) => {

@@ -84,6 +84,7 @@ const formSlice = createSlice({
             state.securityKeyForm.value = action.payload.value;
             state.securityKeyForm.error = action.payload.error;
         },
+        reset: () => initialState,
         setSubmitObj: (state: any) => {
             const ipRadioInputValue = (state.ipRadioInputValue === "autoIp") ? true: false;
             const DNSradioInputValue = (state.DNSradioInputValue === "autoDNS") ? true: false;
@@ -133,7 +134,8 @@ export const {
     setInputValue,
     setSecurityKeyForm,
     setSubmitObj,
-    setErrorValue
+    setErrorValue,
+    reset
 } = formSlice.actions;
 export const showFormData = (state) => state.form;
 export default formSlice.reducer;

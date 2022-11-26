@@ -3,12 +3,11 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import "./buttons.css";
 import { useSelector, useDispatch} from "react-redux";
-import {setSubmitObj, showFormData} from "../../slice/formSlice";
+import {setSubmitObj, showFormData, reset} from "../../slice/formSlice";
 
 
 export const Buttons = () => {
     const [render, setRender] = useState(false);
-    const formData = useSelector(showFormData);
     const {
         data, 
         securityKeyForm, 
@@ -30,10 +29,12 @@ export const Buttons = () => {
     const onSaveBtnClick = () => {
         dispatch(setSubmitObj());
         setRender(data => !data);
+        
     }
 
     useEffect(() => {
         console.log(data);
+        dispatch(reset());
     }, [render]);
 
 

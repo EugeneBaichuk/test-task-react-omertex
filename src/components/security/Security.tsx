@@ -24,7 +24,7 @@ export const Security = () => {
     return (
         <>
             <div>
-                <FormControlLabel  onChange={onSecurityChange(securityInputChecked)} control={wifiInputChecked ? <Checkbox checked={securityInputChecked}/>: <Checkbox disabled/>} label="Enable Wireless Security" />
+                <FormControlLabel control={wifiInputChecked ? <Checkbox onChange={onSecurityChange(securityInputChecked)} checked={securityInputChecked}/>: <Checkbox disabled checked={securityInputChecked}/>} label="Enable Wireless Security" />
                 </div>
                 <div style={{width: "fit-content", margin: "0 20px 0 auto"}}>
                 <TextField

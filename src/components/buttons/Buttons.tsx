@@ -1,14 +1,12 @@
-import {useState, useEffect} from "react";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import "./buttons.css";
 import { useSelector, useDispatch} from "react-redux";
-import {setSubmitObj, showFormData, reset} from "../../slice/formSlice";
+import { showFormData, reset} from "../../slice/formSlice";
 
 
 export const Buttons = () => {
-    const {
-        data, 
+    const { 
         securityKeyForm, 
         userIpLabels, 
         userWirelessIpLabels,
@@ -50,7 +48,6 @@ export const Buttons = () => {
         }
     } 
 
-
     const formData = () => {
         const ipRadioInputValue = (state.ipRadioInputValue === "autoIp") ? true: false;
         const DNSradioInputValue = (state.DNSradioInputValue === "autoDNS") ? true: false;
@@ -88,8 +85,8 @@ export const Buttons = () => {
 
     const onSaveBtnClick = () => {
         console.log(JSON.stringify({formData: formData()}));
+        dispatch(reset());
     }
-
 
     return (
         <div className='form__buttons'>

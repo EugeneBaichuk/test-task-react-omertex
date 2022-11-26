@@ -34,11 +34,8 @@ export const Form = () => {
     } = useSelector(showFormData);
 
     const dispatch = useDispatch();
-    const onChange = (setValue) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (setValue: (action: string) => any ) => (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setValue(e.target.value));
-        if (ipFormControlData === "autoIp") {
-            
-        } 
     }
     const onWifiChange = (val: boolean) => () => {
         dispatch(setWifiInput(!val));
@@ -47,7 +44,6 @@ export const Form = () => {
         }
         
     }
-    
 
     return (
         <div className='form'>

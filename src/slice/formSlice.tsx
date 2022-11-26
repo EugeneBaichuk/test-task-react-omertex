@@ -1,4 +1,51 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {RootState} from "./index";
+
+export interface UserLabel {
+    label: string;
+    required: boolean;
+    value: string;
+    wireless: boolean;
+    id: string;
+    userForm: boolean;
+    error: boolean;
+}
+export interface SecurityData {
+    value: string;
+    error: boolean;
+}
+
+export interface FormControlData {
+    value: string;
+    label: string;
+}
+
+export interface InputData {
+    key: string
+    i: string
+    value: string
+    error: boolean
+}
+
+export interface InitialStateObject {
+    textInputsDisabled: boolean;
+    wifiInputChecked: boolean;
+    securityInputChecked: boolean;
+    ipRadioInputValue: string;
+    DNSradioInputValue: string;
+    wirelessIpRadioInputValue: string;
+    wirelessDNSradioInputValue: string;
+    networkName: string;
+    securityKeyForm: SecurityData;
+    userIpLabels: UserLabel[];
+    userWirelessIpLabels: UserLabel[];
+    userDNSLabels: UserLabel[];
+    userWirelessDNSLabels: UserLabel[];
+    ipFormControlData: FormControlData[];
+    wirelessIpFormControlData: FormControlData[];
+    DNSformControlData: FormControlData[];
+    wirelessDNSformControlData: FormControlData[];
+}
 
 const initialState = {
     textInputsDisabled: false,
@@ -42,62 +89,61 @@ const initialState = {
         {value: "wirelessAutoDNS", label: "Obtain DNS server adress automathically"},
         {value: "wirelessUserDNS", label: "Use the following DS server address"}
     ],
-    data: {}
 }
 
 const formSlice = createSlice({
     name: "form",
     initialState, 
     reducers: {
-        setRadioInputValue: (state, action) => {
+        setRadioInputValue: (state: InitialStateObject, action: PayloadAction<string>) => {
             state.ipRadioInputValue = action.payload;
         },
-        setDNSRadioInputValue: (state, action) => {
+        setDNSRadioInputValue: (state: InitialStateObject, action: PayloadAction<string>) => {
             state.DNSradioInputValue = action.payload;
         },
-        setWirelessIpRadioInputValue: (state, action) => {
+        setWirelessIpRadioInputValue: (state: InitialStateObject, action: PayloadAction<string>) => {
             state.wirelessIpRadioInputValue = action.payload;
         },
-        setWirelessDNSRadioInputValue: (state, action) => {
+        setWirelessDNSRadioInputValue: (state: InitialStateObject, action: PayloadAction<string>) => {
             state.wirelessDNSradioInputValue = action.payload;
         },
-        setInputsDisabled: (state, action) => {
+        setInputsDisabled: (state: InitialStateObject, action: PayloadAction<boolean>) => {
             state.textInputsDisabled = action.payload;
         },
-        setWifiInput: (state, action) => {
+        setWifiInput: (state: InitialStateObject, action: PayloadAction<boolean>) => {
             state.wifiInputChecked = action.payload;
         }, 
-        setSecurityInput: (state, action) => {
+        setSecurityInput: (state: InitialStateObject, action: PayloadAction<boolean>) => {
             state.securityInputChecked = action.payload;
         },
-        setNetworkName: (state, action) => {
+        setNetworkName: (state: InitialStateObject, action: PayloadAction<string>) => {
             state.networkName = action.payload;
         },
-        setInputValue: (state: any, action) => {
+        setInputValue: (state: any, action: PayloadAction<InputData>) => {
             state[action.payload.key][action.payload.i].value = action.payload.value;
             state[action.payload.key][action.payload.i].error = action.payload.error;
         },
-        setErrorValue: (state: any) => {
-            state.userIpLabels.map((item: any) => item.error = false);
+        setErrorValue: (state: InitialStateObject) => {
+            state.userIpLabels.map((item: UserLabel) => item.error = false);
         },
-        setSecurityKeyForm: (state: any, action) => {
+        setSecurityKeyForm: (state: InitialStateObject, action: PayloadAction<SecurityData>) => {
             state.securityKeyForm.value = action.payload.value;
             state.securityKeyForm.error = action.payload.error;
         },
         reset: () => initialState,
-        resetUserIpLabels: (state) => {
+        resetUserIpLabels: (state: InitialStateObject) => {
             state.userIpLabels = initialState.userIpLabels
         },
-        resetUserDNSLabels: (state) => {
+        resetUserDNSLabels: (state: InitialStateObject) => {
             state.userDNSLabels = initialState.userDNSLabels
         },
-        resetUserWirelessDNSLabels: (state) => {
+        resetUserWirelessDNSLabels: (state: InitialStateObject) => {
             state.userWirelessDNSLabels = initialState.userWirelessDNSLabels
         },
-        resetUserWirelessIpLabels: (state) => {
+        resetUserWirelessIpLabels: (state: InitialStateObject) => {
             state.userWirelessIpLabels = initialState.userWirelessIpLabels
         },
-        resetWifi: (state) => {
+        resetWifi: (state: InitialStateObject) => {
             state.securityInputChecked = initialState.securityInputChecked
             state.wirelessIpRadioInputValue = initialState.wirelessIpRadioInputValue
             state.wirelessDNSradioInputValue = initialState.wirelessDNSradioInputValue
@@ -106,42 +152,8 @@ const formSlice = createSlice({
             state.userWirelessDNSLabels = initialState.userWirelessDNSLabels
             state.securityKeyForm = initialState.securityKeyForm
         },
-        resetSecurity: (state) => {
+        resetSecurity: (state: InitialStateObject) => {
             state.securityKeyForm = initialState.securityKeyForm
-        },
-        setSubmitObj: (state: any) => {
-            const ipRadioInputValue = (state.ipRadioInputValue === "autoIp") ? true: false;
-            const DNSradioInputValue = (state.DNSradioInputValue === "autoDNS") ? true: false;
-            const wirelessIpRadioInputValue = (state.wirelessIpRadioInputValue === "wirelessAutoIp") ? true: false;
-            const wirelessDNSradioInputValue = (state.wirelessDNSradioInputValue === "wirelessAutoDNS") ? true: false;
-            state.data = {
-                autoEthernetIpRequired: ipRadioInputValue,
-                userEthernetIpData: {
-                    adress: state.userIpLabels[0].value,
-                    subnetMask: state.userIpLabels[1].value,
-                    defaultGateway: state.userIpLabels[2].value,
-                },
-                autoEthernetDNSRequired: DNSradioInputValue,
-                userEthernetDNSData: {
-                    preferredDNSServer: state.userDNSLabels[0].value,
-                    alternativeDNSServer: state.userDNSLabels[1].value,
-                },
-                wifiChecked: state.wifiInputChecked,
-                securityChecked: state.securityInputChecked,
-                autoWirelessIpRequired: wirelessIpRadioInputValue,
-                userWirelessIpData: {
-                    adress: state.userWirelessIpLabels[0].value,
-                    subnetMask: state.userWirelessIpLabels[1].value,
-                    defaultGateway: state.userWirelessIpLabels[2].value,
-                },
-                autoWirelessDNSRequired: wirelessDNSradioInputValue,
-                userWirelessDNSData: {
-                    preferredDNSServer: state.userWirelessDNSLabels[0].value,
-                    alternativeDNSServer: state.userWirelessDNSLabels[1].value,
-                },
-                securityKey: state.securityKeyForm.value,
-                wirelessNetworkName: state.networkName
-            }
         },
     }
 })
@@ -157,7 +169,6 @@ export const {
     setNetworkName,
     setInputValue,
     setSecurityKeyForm,
-    setSubmitObj,
     setErrorValue,
     reset,
     resetUserIpLabels,
@@ -167,5 +178,7 @@ export const {
     resetWifi,
     resetSecurity
 } = formSlice.actions;
-export const showFormData = (state) => state.form;
+
+
+export const showFormData = (state: RootState) => state.form;
 export default formSlice.reducer;

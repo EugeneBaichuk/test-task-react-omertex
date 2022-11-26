@@ -4,6 +4,15 @@ import "./buttons.css";
 import { useSelector, useDispatch} from "react-redux";
 import { showFormData, reset} from "../../slice/formSlice";
 
+interface userFormObj {
+    label: string;
+    required: boolean;
+    value: string;
+    wireless: boolean;
+    id: string;
+    userForm: boolean;
+    error: boolean;
+}
 
 export const Buttons = () => {
     const { 
@@ -24,10 +33,10 @@ export const Buttons = () => {
     const dispatch = useDispatch();
 
     let buttonIsDisabled //валидация
-    const userIpLabelsIsDisabled = userIpLabels.find( (item) => item.error || (item.required && !item.value))
-    const userDNSLabelsIsDisabled = userDNSLabels.find( (item) => item.error || (item.required && !item.value))
-    const userWirelessIpLabelsIsValid = userWirelessIpLabels.find( (item) => item.error || (item.required && !item.value));
-    const userWirelessDNSLabelsIsValid = userWirelessDNSLabels.find( (item) => item.error || (item.required && !item.value));
+    const userIpLabelsIsDisabled = userIpLabels.find( (item: userFormObj) => item.error || (item.required && !item.value))
+    const userDNSLabelsIsDisabled = userDNSLabels.find( (item: userFormObj) => item.error || (item.required && !item.value))
+    const userWirelessIpLabelsIsValid = userWirelessIpLabels.find( (item: userFormObj) => item.error || (item.required && !item.value));
+    const userWirelessDNSLabelsIsValid = userWirelessDNSLabels.find( (item: userFormObj) => item.error || (item.required && !item.value));
 
     buttonIsDisabled = (ipRadioInputValue === "autoIp") ? false: userIpLabelsIsDisabled ? true: false;
     buttonIsDisabled = (DNSradioInputValue === "autoDNS") ? buttonIsDisabled : userDNSLabelsIsDisabled ? true: buttonIsDisabled;

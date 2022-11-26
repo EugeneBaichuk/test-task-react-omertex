@@ -2,7 +2,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useSelector, useDispatch} from "react-redux";
-import { showFormData, setSecurityInput, setSecurityKeyForm, resetSecurity} from "../../slice/formSlice";
+import { showFormData, setSecurityInput, setSecurityKeyForm} from "../../slice/formSlice";
 
 export const Security = () => {
     const {
@@ -13,12 +13,9 @@ export const Security = () => {
     const dispatch = useDispatch();
     const onSecurityChange = (val: boolean) => () => {
         dispatch(setSecurityInput(!val));
-        // if (securityInputChecked) {
-        //     dispatch(resetSecurity());
-        // }
     }
 
-    const onKeyChange = (e) => {
+    const onKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const error = securityKeyForm.value ? false: true;
         dispatch(setSecurityKeyForm({value: e.target.value, error: error}));
     }

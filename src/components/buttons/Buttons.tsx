@@ -19,21 +19,36 @@ export const Buttons = () => {
         ipRadioInputValue,
         DNSradioInputValue,
         wirelessIpRadioInputValue,
-        wirelessDNSradioInputValue
+        wirelessDNSradioInputValue,
+        wifiInputChecked,
+        securityInputChecked
     } = useSelector(showFormData);
 
-    let buttonIsDisabled = (securityKeyForm.value) ? false: true;
-    buttonIsDisabled = (userIpLabels.find( (item) => item.error || (item.required && !item.value)) ? true: buttonIsDisabled);
-    buttonIsDisabled =  userWirelessIpLabels.find( (item) => item.error || (item.required && !item.value)) ? true: buttonIsDisabled;
-    buttonIsDisabled =  userDNSLabels.find( (item) => item.error || (item.required && !item.value)) ? true: buttonIsDisabled;
-    buttonIsDisabled =  userWirelessDNSLabels.find( (item) => item.error || (item.required && !item.value)) ? true: buttonIsDisabled;
-    buttonIsDisabled = networkName ? buttonIsDisabled: true;
+    let buttonIsDisabled //валидация
+    const userIpLabelsIsDisabled = userIpLabels.find( (item) => item.error || (item.required && !item.value))
+    const userDNSLabelsIsDisabled = userDNSLabels.find( (item) => item.error || (item.required && !item.value))
+    const userWirelessIpLabelsIsValid = userWirelessIpLabels.find( (item) => item.error || (item.required && !item.value));
+    const userWirelessDNSLabelsIsValid = userWirelessDNSLabels.find( (item) => item.error || (item.required && !item.value));
 
+    buttonIsDisabled = (ipRadioInputValue === "autoIp") ? false: userIpLabelsIsDisabled ? true: false;
+    buttonIsDisabled = (DNSradioInputValue === "autoDNS") ? buttonIsDisabled : userDNSLabelsIsDisabled ? true: buttonIsDisabled;
+    if (wifiInputChecked) {
+        if ( !networkName ) {
+            buttonIsDisabled = true
+        }
+        if (securityInputChecked ) {
+            if (!securityKeyForm.value) {
+                buttonIsDisabled = true
+            } 
+        }
+        if (wirelessIpRadioInputValue !== "wirelessAutoIp") {
+            buttonIsDisabled = userWirelessIpLabelsIsValid ? true: buttonIsDisabled
+        }
+        if (wirelessDNSradioInputValue !== "wirelessAutoDNS") {
+            buttonIsDisabled = userWirelessDNSLabelsIsValid ? true: buttonIsDisabled
+        }
+    } 
 
-    // (ipRadioInputValue === "autoIp") ? false :
-    // (wirelessIpRadioInputValue === "wirelessAutoIp") ? false :
-    // (DNSradioInputValue === "autoDNS") ? false :
-    // (wirelessDNSradioInputValue === "wirelessAutoDNS") ? false :
 
     const dispatch = useDispatch();
     const onSaveBtnClick = () => {
@@ -46,9 +61,6 @@ export const Buttons = () => {
         console.log(data);
         dispatch(reset());
     }, [render]);
-
-
-
 
     return (
         <div className='form__buttons'>

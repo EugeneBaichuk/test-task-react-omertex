@@ -15,18 +15,13 @@ type UserIpInputsItemProps = {
 }
 
 export const UserIpInputsItem: FC<UserIpInputsItemProps> = ({error, label, radioInputDisabled, required, value, wireless, id, onValueChange}) => {
-    const [blurError, setBlurError] = useState(false);
     const {wifiInputChecked} = useSelector(showFormData);
     const wifiDisabled = (!wifiInputChecked && wireless);
 
-    const onInputBlur = () => {
-        setBlurError(error);
-    }
-
     return (
         <div style={{position: "relative", margin: "20px 0"}}>
-        <TextField error={blurError} onBlur={onInputBlur} required={required} fullWidth id="outlined-basic" onChange={onValueChange(id)} value={value} label={label} disabled={radioInputDisabled || wifiDisabled} variant="outlined" />
-        {blurError && <div style={{position: "absolute", left: "10px", fontSize: '11px', color: "#d84949"}}>Incorrect Entry</div>}
+        <TextField error={error} required={required} fullWidth id="outlined-basic" onChange={onValueChange(id)} value={value} label={label} disabled={radioInputDisabled || wifiDisabled} variant="outlined" />
+        {error && <div style={{position: "absolute", left: "10px", fontSize: '11px', color: "#d84949"}}>Please type data in the format ___.___.___.___</div>}
         </div>
     )
 }

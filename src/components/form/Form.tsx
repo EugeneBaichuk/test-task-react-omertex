@@ -8,7 +8,7 @@ import { showFormData,
     setWirelessIpRadioInputValue, 
     setWirelessDNSRadioInputValue,
     setWifiInput,
-    setErrorValue,
+    resetWifi
 } from "../../slice/formSlice";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -42,6 +42,10 @@ export const Form = () => {
     }
     const onWifiChange = (val: boolean) => () => {
         dispatch(setWifiInput(!val));
+        if (wifiInputChecked) {
+            dispatch(resetWifi());    
+        }
+        
     }
     
 
@@ -56,7 +60,7 @@ export const Form = () => {
             </section>
             <section className='form__section'>
                 <h3 className="form__header">Wireless Settings</h3>
-                <FormControlLabel  control={<Checkbox onChange={onWifiChange(wifiInputChecked)} checked={wifiInputChecked}/>} label="Enable Wifi" />
+                <FormControlLabel  control={<Checkbox value={wifiInputChecked} onChange={onWifiChange(wifiInputChecked)} checked={wifiInputChecked}/>} label="Enable Wifi" />
                 <SelectAutoWidth/> 
                 <Security/>
                 <IpAdress radioInputValue={wirelessIpRadioInputValue} formControlData={wirelessIpFormControlData} onchange={onChange(setWirelessIpRadioInputValue)}/>

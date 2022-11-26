@@ -85,6 +85,30 @@ const formSlice = createSlice({
             state.securityKeyForm.error = action.payload.error;
         },
         reset: () => initialState,
+        resetUserIpLabels: (state) => {
+            state.userIpLabels = initialState.userIpLabels
+        },
+        resetUserDNSLabels: (state) => {
+            state.userDNSLabels = initialState.userDNSLabels
+        },
+        resetUserWirelessDNSLabels: (state) => {
+            state.userWirelessDNSLabels = initialState.userWirelessDNSLabels
+        },
+        resetUserWirelessIpLabels: (state) => {
+            state.userWirelessIpLabels = initialState.userWirelessIpLabels
+        },
+        resetWifi: (state) => {
+            state.securityInputChecked = initialState.securityInputChecked
+            state.wirelessIpRadioInputValue = initialState.wirelessIpRadioInputValue
+            state.wirelessDNSradioInputValue = initialState.wirelessDNSradioInputValue
+            state.networkName = initialState.networkName
+            state.userWirelessIpLabels = initialState.userWirelessIpLabels
+            state.userWirelessDNSLabels = initialState.userWirelessDNSLabels
+            state.securityKeyForm = initialState.securityKeyForm
+        },
+        resetSecurity: (state) => {
+            state.securityKeyForm = initialState.securityKeyForm
+        },
         setSubmitObj: (state: any) => {
             const ipRadioInputValue = (state.ipRadioInputValue === "autoIp") ? true: false;
             const DNSradioInputValue = (state.DNSradioInputValue === "autoDNS") ? true: false;
@@ -135,7 +159,13 @@ export const {
     setSecurityKeyForm,
     setSubmitObj,
     setErrorValue,
-    reset
+    reset,
+    resetUserIpLabels,
+    resetUserDNSLabels,
+    resetUserWirelessDNSLabels,
+    resetUserWirelessIpLabels,
+    resetWifi,
+    resetSecurity
 } = formSlice.actions;
 export const showFormData = (state) => state.form;
 export default formSlice.reducer;

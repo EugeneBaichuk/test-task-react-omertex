@@ -7,7 +7,6 @@ import {setSubmitObj, showFormData, reset} from "../../slice/formSlice";
 
 
 export const Buttons = () => {
-    const [render, setRender] = useState(false);
     const {
         data, 
         securityKeyForm, 
@@ -23,6 +22,8 @@ export const Buttons = () => {
         wifiInputChecked,
         securityInputChecked
     } = useSelector(showFormData);
+    const state = useSelector(showFormData); 
+    const dispatch = useDispatch();
 
     let buttonIsDisabled //валидация
     const userIpLabelsIsDisabled = userIpLabels.find( (item) => item.error || (item.required && !item.value))
@@ -50,17 +51,45 @@ export const Buttons = () => {
     } 
 
 
-    const dispatch = useDispatch();
-    const onSaveBtnClick = () => {
-        dispatch(setSubmitObj());
-        setRender(data => !data);
-        
+    const formData = () => {
+        const ipRadioInputValue = (state.ipRadioInputValue === "autoIp") ? true: false;
+        const DNSradioInputValue = (state.DNSradioInputValue === "autoDNS") ? true: false;
+        const wirelessIpRadioInputValue = (state.wirelessIpRadioInputValue === "wirelessAutoIp") ? true: false;
+        const wirelessDNSradioInputValue = (state.wirelessDNSradioInputValue === "wirelessAutoDNS") ? true: false;
+        return {
+            autoEthernetIpRequired: ipRadioInputValue,
+            userEthernetIpData: {
+                adress: state.userIpLabels[0].value,
+                subnetMask: state.userIpLabels[1].value,
+                defaultGateway: state.userIpLabels[2].value,
+            },
+            autoEthernetDNSRequired: DNSradioInputValue,
+            userEthernetDNSData: {
+                preferredDNSServer: state.userDNSLabels[0].value,
+                alternativeDNSServer: state.userDNSLabels[1].value,
+            },
+            wifiChecked: state.wifiInputChecked,
+            securityChecked: state.securityInputChecked,
+            autoWirelessIpRequired: wirelessIpRadioInputValue,
+            userWirelessIpData: {
+                adress: state.userWirelessIpLabels[0].value,
+                subnetMask: state.userWirelessIpLabels[1].value,
+                defaultGateway: state.userWirelessIpLabels[2].value,
+            },
+            autoWirelessDNSRequired: wirelessDNSradioInputValue,
+            userWirelessDNSData: {
+                preferredDNSServer: state.userWirelessDNSLabels[0].value,
+                alternativeDNSServer: state.userWirelessDNSLabels[1].value,
+            },
+            securityKey: state.securityKeyForm.value,
+            wirelessNetworkName: state.networkName
+        }
     }
 
-    useEffect(() => {
-        console.log(data);
-        dispatch(reset());
-    }, [render]);
+    const onSaveBtnClick = () => {
+        console.log(JSON.stringify({formData: formData()}));
+    }
+
 
     return (
         <div className='form__buttons'>

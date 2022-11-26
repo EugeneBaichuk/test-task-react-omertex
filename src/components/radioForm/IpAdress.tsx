@@ -15,8 +15,6 @@ type IpAdressProps = {
 }
 
 export const IpAdress: FC<IpAdressProps> = ({radioInputValue, formControlData, onchange}) => {
-    
-    
 
     return (
         <FormControl>

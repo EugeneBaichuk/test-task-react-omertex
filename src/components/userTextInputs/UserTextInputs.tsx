@@ -1,6 +1,7 @@
-import {FC} from "react";
+import React, {FC} from "react";
 import Box from '@mui/material/Box';
 import UserTextInputsItem from '../userTextInputsItem';
+import {InitialStateObject } from "../../slice/formSlice"
 import { useSelector, useDispatch} from "react-redux";
 import { setInputValue, showFormData } from "../../slice/formSlice";
 
@@ -19,29 +20,28 @@ type UserIpInputsProps = {
     radioInputValue: string,
 }
 
+
+
 export const UserTextInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, radioInputValue}) => {
-    const formData = useSelector(showFormData);
+    const formData: InitialStateObject = useSelector(showFormData);
     const userTextForms = () => {
         const forms = [];
         for (let key  in formData) {
-            formData[key].userForm && forms.push({[key]: formData[key]});
-            if (typeof(formData[key][0]) === "object") {
-                formData[key][0].userForm && forms.push({[key]: formData[key][0]})
+            if (typeof(formData[key as keyof object][0]) === "object") {
+                formData[key as keyof object][0]['userForm'] && forms.push({[key]: formData[key as keyof object][0]})
             }
         }
         return forms;
     }
-
     const isDisabled = (radioInputValue === inputVal) ? false : true;
-
     const dispatch = useDispatch();
 
-    const onValueChange = (id: string) => (e: any) => {
+    const onValueChange = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
         let currentForm: any = [];
         userLabels.map((item, i) => {
             userTextForms().forEach(form => {
                 for (let key in form) {
-                    if (form[key].id === item.id) {
+                    if (form[key as keyof object]['id'] === item.id) {
                         currentForm = Object.keys(form);
                     }
                 }

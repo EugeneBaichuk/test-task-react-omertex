@@ -21,7 +21,7 @@ export interface FormControlData {
 }
 
 export interface InputData {
-    key: string
+    key: keyof InitialStateObject
     i: number
     value: string
     error: boolean

@@ -15,7 +15,7 @@ type FormControlLabelItemProps = {
     label: string
 }
 
-export const FormControlLabelItem: FC<FormControlLabelItemProps> = ({value, label}) => {
+export const RadioFormItem: FC<FormControlLabelItemProps> = ({value, label}) => {
     const {wifiInputChecked} = useSelector(showFormData);
     const dispatch = useDispatch();
 

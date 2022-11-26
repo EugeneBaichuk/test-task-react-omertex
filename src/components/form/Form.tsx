@@ -1,5 +1,5 @@
-import IpAdress from "../radioForm";
-import UserIpInputs from "../userTextInputs";
+import RadioForms from "../radioForm";
+import UserTextInputs from "../userTextInputs";
 import "./form.css";
 import { useSelector, useDispatch} from "react-redux";
 import { showFormData, 
@@ -49,20 +49,20 @@ export const Form = () => {
         <div className='form'>
             <section className='form__section'>
                 <h3 className="form__header">Ethernet Settings</h3>
-                <IpAdress radioInputValue={ipRadioInputValue} formControlData={ipFormControlData} onchange={onChange(setRadioInputValue)}/>
-                <UserIpInputs userLabels={userIpLabels} inputVal={"userIp"} radioInputValue={ipRadioInputValue}/>
-                <IpAdress radioInputValue={DNSradioInputValue} formControlData={DNSformControlData} onchange={onChange(setDNSRadioInputValue)}/>
-                <UserIpInputs userLabels={userDNSLabels} inputVal={"userDNS"} radioInputValue={DNSradioInputValue}/>
+                <RadioForms radioInputValue={ipRadioInputValue} formControlData={ipFormControlData} onchange={onChange(setRadioInputValue)}/>
+                <UserTextInputs userLabels={userIpLabels} inputVal={"userIp"} radioInputValue={ipRadioInputValue}/>
+                <RadioForms radioInputValue={DNSradioInputValue} formControlData={DNSformControlData} onchange={onChange(setDNSRadioInputValue)}/>
+                <UserTextInputs userLabels={userDNSLabels} inputVal={"userDNS"} radioInputValue={DNSradioInputValue}/>
             </section>
             <section className='form__section'>
                 <h3 className="form__header">Wireless Settings</h3>
                 <FormControlLabel  control={<Checkbox value={wifiInputChecked} onChange={onWifiChange(wifiInputChecked)} checked={wifiInputChecked}/>} label="Enable Wifi" />
                 <SelectAutoWidth/> 
                 <Security/>
-                <IpAdress radioInputValue={wirelessIpRadioInputValue} formControlData={wirelessIpFormControlData} onchange={onChange(setWirelessIpRadioInputValue)}/>
-                <UserIpInputs userLabels={userWirelessIpLabels} inputVal={"wirelessUserIp"} radioInputValue={wirelessIpRadioInputValue}/>
-                <IpAdress radioInputValue={wirelessDNSradioInputValue} formControlData={wirelessDNSformControlData} onchange={onChange(setWirelessDNSRadioInputValue)}/>
-                <UserIpInputs userLabels={userWirelessDNSLabels} inputVal={"wirelessUserDNS"} radioInputValue={wirelessDNSradioInputValue}/>
+                <RadioForms radioInputValue={wirelessIpRadioInputValue} formControlData={wirelessIpFormControlData} onchange={onChange(setWirelessIpRadioInputValue)}/>
+                <UserTextInputs userLabels={userWirelessIpLabels} inputVal={"wirelessUserIp"} radioInputValue={wirelessIpRadioInputValue}/>
+                <RadioForms radioInputValue={wirelessDNSradioInputValue} formControlData={wirelessDNSformControlData} onchange={onChange(setWirelessDNSRadioInputValue)}/>
+                <UserTextInputs userLabels={userWirelessDNSLabels} inputVal={"wirelessUserDNS"} radioInputValue={wirelessDNSradioInputValue}/>
             </section>
             <Buttons/>
         </div>

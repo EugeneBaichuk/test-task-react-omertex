@@ -1,2 +1,2 @@
-import { IpAdress } from "./IpAdress";
-export default IpAdress;
+import { RadioForms } from "./RadioForm";
+export default RadioForms;

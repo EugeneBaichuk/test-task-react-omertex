@@ -22,7 +22,7 @@ export interface FormControlData {
 
 export interface InputData {
     key: string
-    i: string
+    i: number
     value: string
     error: boolean
 }

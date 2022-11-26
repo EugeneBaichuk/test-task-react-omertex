@@ -1,6 +1,6 @@
 import {FC} from "react";
 import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabelItem from '../radioFormItem';
+import RadioFormItem from '../radioFormItem';
 import FormControl from '@mui/material/FormControl';
 
 interface formControlDataObj {
@@ -8,13 +8,13 @@ interface formControlDataObj {
     label: string
 }
 
-type IpAdressProps = {
+type RadioFormProps = {
     radioInputValue: string,
     formControlData: Array<formControlDataObj>
     onchange: any
 }
 
-export const IpAdress: FC<IpAdressProps> = ({radioInputValue, formControlData, onchange}) => {
+export const RadioForms: FC<RadioFormProps> = ({radioInputValue, formControlData, onchange}) => {
 
     return (
         <FormControl>
@@ -24,7 +24,7 @@ export const IpAdress: FC<IpAdressProps> = ({radioInputValue, formControlData, o
                 value={radioInputValue}
                 name="radio-buttons-group"
             >
-                {formControlData.map((radio: formControlDataObj, i: number) =><FormControlLabelItem key={i} {...radio}/>)}
+                {formControlData.map((radio: formControlDataObj, i: number) =><RadioFormItem key={i} {...radio}/>)}
             </RadioGroup>
         </FormControl>
     );

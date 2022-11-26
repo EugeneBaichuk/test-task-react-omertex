@@ -1,2 +1,2 @@
-import { FormControlLabelItem } from "./FormControlLabelItem";
-export default FormControlLabelItem;
+import { RadioFormItem } from "./RadioFormItem";
+export default RadioFormItem;

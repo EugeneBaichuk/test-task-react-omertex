@@ -1,6 +1,6 @@
 import {FC} from "react";
 import Box from '@mui/material/Box';
-import UserIpInputsItem from '../userTextInputsItem';
+import UserTextInputsItem from '../userTextInputsItem';
 import { useSelector, useDispatch} from "react-redux";
 import { setInputValue, showFormData } from "../../slice/formSlice";
 
@@ -19,11 +19,11 @@ type UserIpInputsProps = {
     radioInputValue: string,
 }
 
-export const UserIpInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, radioInputValue}) => {
+export const UserTextInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, radioInputValue}) => {
     const formData = useSelector(showFormData);
     const userTextForms = () => {
         const forms = [];
-        for (let key in formData) {
+        for (let key  in formData) {
             formData[key].userForm && forms.push({[key]: formData[key]});
             if (typeof(formData[key][0]) === "object") {
                 formData[key][0].userForm && forms.push({[key]: formData[key][0]})
@@ -64,7 +64,7 @@ export const UserIpInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, radio
         noValidate
         autoComplete="off"
         >
-        {userLabels.map((label, i) => <div key={i}><UserIpInputsItem onValueChange={onValueChange} radioInputDisabled={isDisabled} {...label}/></div>)}
+        {userLabels.map((label, i) => <div key={i}><UserTextInputsItem onValueChange={onValueChange} radioInputDisabled={isDisabled} {...label}/></div>)}
         </Box>
     );
 };

@@ -1,2 +1,2 @@
-import { UserIpInputs } from "./userIpInputs";
-export default UserIpInputs;
+import { UserTextInputs } from "./UserTextInputs";
+export default UserTextInputs;

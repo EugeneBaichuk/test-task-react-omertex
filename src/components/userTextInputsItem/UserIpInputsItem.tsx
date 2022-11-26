@@ -24,6 +24,9 @@ export const UserIpInputsItem: FC<UserIpInputsItemProps> = ({error, label, radio
     }
 
     return (
+        <div style={{position: "relative", margin: "20px 0"}}>
         <TextField error={blurError} onBlur={onInputBlur} required={required} fullWidth id="outlined-basic" onChange={onValueChange(id)} value={value} label={label} disabled={radioInputDisabled || wifiDisabled} variant="outlined" />
+        {blurError && <div style={{position: "absolute", left: "10px", fontSize: '11px', color: "#d84949"}}>Incorrect Entry</div>}
+        </div>
     )
 }

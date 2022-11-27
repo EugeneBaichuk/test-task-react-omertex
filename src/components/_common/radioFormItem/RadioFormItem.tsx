@@ -8,14 +8,16 @@ import { showFormData,
     resetUserDNSLabels,
     resetUserWirelessDNSLabels,
     resetUserWirelessIpLabels 
-} from "../../slice/formSlice";
+} from "../../../slice/formSlice";
+import {formControlDataObj} from "../../../types/Tupes";
 
-type FormControlLabelItemProps = {
-    value: string,
-    label: string
-}
+/* 
+*   Возвращает элемент группы радиокнопок
+*   реализован сброс текстовых полей при их деактивации радиокнопкой, чтобы данные из неактивных полей
+    не отправлялась на backend/(консоль)  
+*/
 
-export const RadioFormItem: FC<FormControlLabelItemProps> = ({value, label}) => {
+export const RadioFormItem: FC<formControlDataObj> = ({value, label}) => {
     const {wifiInputChecked} = useSelector(showFormData);
     const dispatch = useDispatch();
 
@@ -24,7 +26,7 @@ export const RadioFormItem: FC<FormControlLabelItemProps> = ({value, label}) => 
     || value === "wirelessUserDNS" 
     || value === "wirelessAutoDNS") && !wifiInputChecked) ? true : false; 
 
-    const onCheckboxClick = () => {
+    const onResetFields = () => {
         switch (value) {
             case "autoIp": 
                 dispatch(resetUserIpLabels())
@@ -39,10 +41,9 @@ export const RadioFormItem: FC<FormControlLabelItemProps> = ({value, label}) => 
                 dispatch(resetUserWirelessDNSLabels())
                 break;
         }
-
     } 
 
     return (
-        <FormControlLabel onChange={onCheckboxClick} disabled={disabled} value={value} label={label} control={<Radio />}/>
+        <FormControlLabel onChange={onResetFields} disabled={disabled} value={value} label={label} control={<Radio />}/>
     )
 }

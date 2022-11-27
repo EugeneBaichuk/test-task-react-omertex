@@ -7,6 +7,8 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import { useSelector, useDispatch} from "react-redux";
 import { showFormData, setNetworkName } from "../../slice/formSlice";
 
+/* Возвращает input "Wireless network name"*/
+
 export const SelectAutoWidth = () => {
     const {wifiInputChecked, networkName} = useSelector(showFormData);
     const dispatch = useDispatch();
@@ -34,9 +36,9 @@ export const SelectAutoWidth = () => {
                         label="Wireless network name"
                     >
                         <MenuItem sx={{width: "300px"}} value=""><em>None</em></MenuItem>
-                        <MenuItem value={"network1"}>network1</MenuItem>
-                        <MenuItem value={"network2"}>network2</MenuItem>
-                        <MenuItem value={"network3"}>network3</MenuItem>
+                        <MenuItem value={"network1"}>network name 1</MenuItem>
+                        <MenuItem value={"network2"}>network name 2</MenuItem>
+                        <MenuItem value={"network3"}>network name 3</MenuItem>
                     </Select>
                 </FormControl>
             </div>

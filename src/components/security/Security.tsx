@@ -2,7 +2,12 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useSelector, useDispatch} from "react-redux";
-import { showFormData, setSecurityInput, setSecurityKeyForm} from "../../slice/formSlice";
+import { showFormData, setSecurityInput, setSecurityKeyForm, resetSecurity} from "../../slice/formSlice";
+
+/* 
+* Возвращает чекбокс Enable Wireless Security и текстовую форму Security key
+* реализован сброс текстового поля при деактивации чекбокса
+*/
 
 export const Security = () => {
     const {
@@ -13,11 +18,13 @@ export const Security = () => {
     const dispatch = useDispatch();
     const onSecurityChange = (val: boolean) => () => {
         dispatch(setSecurityInput(!val));
+        if (securityInputChecked) {
+            dispatch(resetSecurity())
+        }
     }
 
     const onKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const error = securityKeyForm.value ? false: true;
-        dispatch(setSecurityKeyForm({value: e.target.value, error: error}));
+        dispatch(setSecurityKeyForm({value: e.target.value, error: !e.target.value}));
     }
 
     return (
@@ -31,7 +38,7 @@ export const Security = () => {
                     disabled={!securityInputChecked || !wifiInputChecked}
                     sx={{ minWidth: 350 }}
                     value={securityKeyForm.value}
-                    error={false}
+                    error={securityKeyForm.error}
                     required
                     id="outlined-required"
                     label="Security key:"

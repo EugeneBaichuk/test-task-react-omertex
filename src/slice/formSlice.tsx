@@ -1,51 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {RootState} from "./index";
-
-export interface UserLabel {
-    label: string;
-    required: boolean;
-    value: string;
-    wireless: boolean;
-    id: string;
-    userForm: boolean;
-    error: boolean;
-}
-export interface SecurityData {
-    value: string;
-    error: boolean;
-}
-
-export interface FormControlData {
-    value: string;
-    label: string;
-}
-
-export interface InputData {
-    key: keyof InitialStateObject
-    i: number
-    value: string
-    error: boolean
-}
-
-export interface InitialStateObject {
-    textInputsDisabled: boolean;
-    wifiInputChecked: boolean;
-    securityInputChecked: boolean;
-    ipRadioInputValue: string;
-    DNSradioInputValue: string;
-    wirelessIpRadioInputValue: string;
-    wirelessDNSradioInputValue: string;
-    networkName: string;
-    securityKeyForm: SecurityData;
-    userIpLabels: UserLabel[];
-    userWirelessIpLabels: UserLabel[];
-    userDNSLabels: UserLabel[];
-    userWirelessDNSLabels: UserLabel[];
-    ipFormControlData: FormControlData[];
-    wirelessIpFormControlData: FormControlData[];
-    DNSformControlData: FormControlData[];
-    wirelessDNSformControlData: FormControlData[];
-}
+import { InitialStateObject } from "../types/Tupes";
+import {InputData} from "../types/Tupes";
+import {SecurityData} from "../types/Tupes";
+import {userFormObj} from "../types/Tupes";
 
 const initialState = {
     textInputsDisabled: false,
@@ -124,7 +82,7 @@ const formSlice = createSlice({
             state[action.payload.key][action.payload.i].error = action.payload.error;
         },
         setErrorValue: (state: InitialStateObject) => {
-            state.userIpLabels.map((item: UserLabel) => item.error = false);
+            state.userIpLabels.map((item: userFormObj) => item.error = false);
         },
         setSecurityKeyForm: (state: InitialStateObject, action: PayloadAction<SecurityData>) => {
             state.securityKeyForm.value = action.payload.value;

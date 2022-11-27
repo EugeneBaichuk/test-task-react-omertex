@@ -1,29 +1,19 @@
 import React, {FC} from "react";
 import Box from '@mui/material/Box';
 import UserTextInputsItem from '../userTextInputsItem';
-import {InitialStateObject } from "../../slice/formSlice"
+import {InitialStateObject } from "../../../types/Tupes"
 import { useSelector, useDispatch} from "react-redux";
-import { setInputValue, showFormData } from "../../slice/formSlice";
+import { setInputValue, showFormData } from "../../../slice/formSlice";
+import {UserIpInputsProps} from "../../../types/Tupes";
 
-interface labelObj {
-    label: string,
-    required: boolean,
-    value: string,
-    wireless: boolean,
-    id: string
-    error: boolean
-}
-
-type UserIpInputsProps = {
-    userLabels: Array<labelObj>
-    inputVal: string
-    radioInputValue: string,
-}
-
-
+/* Возвращает блок текстовых input элементов */
 
 export const UserTextInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, radioInputValue}) => {
     const formData: InitialStateObject = useSelector(showFormData);
+    const dispatch = useDispatch();
+    const isDisabled = (radioInputValue === inputVal) ? false : true;
+
+    /* получаем объекьы всех текстовых форм из Redux */
     const userTextForms = () => {
         const forms = [];
         for (let key  in formData) {
@@ -33,11 +23,14 @@ export const UserTextInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, rad
         }
         return forms;
     }
-    const isDisabled = (radioInputValue === inputVal) ? false : true;
-    const dispatch = useDispatch();
+
+    /*
+    * определяем в какой текстовой форме произошел Change Event, 
+    * записываем значение в Redux и валидируем ввод 
+    */
 
     const onValueChange = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        let currentForm: any = [];
+        let currentForm: any = []; 
         userLabels.map((item, i) => {
             userTextForms().forEach(form => {
                 for (let key in form) {
@@ -46,6 +39,7 @@ export const UserTextInputs: FC<UserIpInputsProps> = ({userLabels, inputVal, rad
                     }
                 }
             });
+
             if (item.id === id) {
                 let error = e.target.value.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) ? false: true; 
                 error = (item.label === "IP address:" || item.label === "Subnet Mask:" || item.label === "Preferred DNS server:") ? error: false;

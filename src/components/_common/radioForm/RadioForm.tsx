@@ -2,20 +2,12 @@ import {FC} from "react";
 import RadioGroup from '@mui/material/RadioGroup';
 import RadioFormItem from '../radioFormItem';
 import FormControl from '@mui/material/FormControl';
+import {formControlDataObj} from "../../../types/Tupes";
+import {RadioFormProps} from "../../../types/Tupes";
 
-interface formControlDataObj {
-    value: string,
-    label: string
-}
-
-type RadioFormProps = {
-    radioInputValue: string,
-    formControlData: Array<formControlDataObj>
-    onchange: any
-}
+/* Возвращает группу радио чекбоксов  */
 
 export const RadioForms: FC<RadioFormProps> = ({radioInputValue, formControlData, onchange}) => {
-
     return (
         <FormControl>
             <RadioGroup
@@ -29,4 +21,3 @@ export const RadioForms: FC<RadioFormProps> = ({radioInputValue, formControlData
         </FormControl>
     );
 }
-
